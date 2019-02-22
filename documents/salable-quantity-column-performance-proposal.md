@@ -7,7 +7,7 @@ The `Magento\InventorySalesAdminUi\Ui\Component\Listing\Column\SalableQuantity` 
 ## Solution
 The proposed solution is intended to solve the performance degradation issue with a high volume of `$dataSource['data']['items']` during Product Grid rendering.
 
-## Inroduce new GetSalableQuantityData Class
+### Inroduce new GetSalableQuantityData Class
 The `\Magento\InventorySalesAdminUi\Model\GetSalableQuantityData` class should be responsible for returning a list of `salable_quantity` elements. The `execute()` method should receive an object of `\Magento\Framework\Api\SearchCriteriaInterface` with the predefined filter. The only filter will be added is a list of SKUs.
 
 The `GetSalableQuantityData::execute()` method should be triggered for a list of SKUs allowed for Source Management (see `\Magento\InventoryConfigurationApi\Model\IsSourceItemManagementAllowedForProductTypeInterface`). As a result, only allowed SKUs will appear in the filter for the `execute()` method.
@@ -40,7 +40,7 @@ class GetSalableQuantityData
 }
 ```
 
-## The StockRepositoryInterface::getList() method usage
+### The StockRepositoryInterface::getList() method usage
 The `\Magento\InventorySalesAdminUi\Model\ResourceModel\GetAssignedStockIdsBySku` class is used to get a list of assigned stock ids per SKU. Later, Stock IDs are used to load Stock Item level configuration. The new `Magento\InventorySalesAdminUi\Model\GetSalableQuantityData::execute()` method implementation should load a key-value pair of stock item configuration for all SKUs provided.
 
 As a result, the key-value pair will be similar to the following example:
@@ -51,6 +51,6 @@ As a result, the key-value pair will be similar to the following example:
 ]
 ```
 
-## The StockRepositoryInterface::getList() method usage
+### The StockRepositoryInterface::getList() method usage
 The `Magento\InventorySalesAdminUi\Model\GetSalableQuantityData::execute()` method (alternative to the `\Magento\InventorySalesAdminUi\Model\GetSalableQuantityDataBySku::execute()` method) should use the `\Magento\InventoryApi\Api\StockRepositoryInterface::getList()` method in order to load stock for all assigned stocks per given SKU.
 
