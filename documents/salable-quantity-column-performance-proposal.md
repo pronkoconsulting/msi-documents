@@ -4,6 +4,13 @@ This document provides a list of improvements and its motivation to the Salable 
 ## Problem Statement
 The `Magento\InventorySalesAdminUi\Ui\Component\Listing\Column\SalableQuantity` class is used to prepare the list of QTYs per given SKU. The result of the `SalableQuantity::prepareDataSource()` method execution is an updated list of parameters for the `salable_quantity` element for all `$dataSource['data']['items']` elements. Each of the `salable_quantity` dataset is loaded per SKU, which puts a huge pressure with high number of products in a Product Grid.
 
+### Performance metrics
+The Medium size performance profile is used in order to get an idea on the performance degradation with a high number of SKUs provided in the `SalableQuantity::prepareDataSource()` method. The `\Magento\Framework\Profiler` profiler class was used to gather the performance metrics for the `SalableQuantity::prepareDataSource()` method execution.
+
+Result:
+* 1 product - 0.09 secs
+* 40001 product size (Medium Profile) - 14 seconds
+
 ## Solution
 The proposed solution is intended to solve the performance degradation issue with a high volume of `$dataSource['data']['items']` during Product Grid rendering.
 
