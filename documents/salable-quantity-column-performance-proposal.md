@@ -61,3 +61,8 @@ As a result, the key-value pair will be similar to the following example:
 ### The StockRepositoryInterface::getList() method usage
 The `Magento\InventorySalesAdminUi\Model\GetSalableQuantityData::execute()` method (alternative to the `\Magento\InventorySalesAdminUi\Model\GetSalableQuantityDataBySku::execute()` method) should use the `\Magento\InventoryApi\Api\StockRepositoryInterface::getList()` method in order to load stock for all assigned stocks per given SKU.
 
+### The GetStockItemConfiguration method result caching
+The `\Magento\InventoryConfiguration\Model\GetStockItemConfiguration::execute()` is used more than once and doesn’t implement an intermediate result caching when called with the same input arguments. The method caching should be introduced.
+
+## Open Questions
+1. The `\Magento\InventorySales\Model\GetProductSalableQty::execute()` method have logic which calculates the salable qty taking into account existing reservations for given sku and stock id and subtracting min qty (a.k.a. "Out-of-Stock Threshold"). Is this possible to move this logic on a SQL level?
